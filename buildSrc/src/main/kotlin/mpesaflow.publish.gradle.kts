@@ -28,7 +28,7 @@ configure<PublishingExtension> {
                 developers {
                     developer {
                         name.set("Mpesaflow")
-                        email.set("dev-feedback@mpesaflow.com")
+                        email.set("developer@mpesaflow.com")
                     }
                 }
 
