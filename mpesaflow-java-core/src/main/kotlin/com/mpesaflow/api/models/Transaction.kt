@@ -23,6 +23,7 @@ import java.util.Optional
 @NoAutoDetect
 class Transaction
 private constructor(
+    private val id: JsonField<String>,
     private val transactionId: JsonField<String>,
     private val amount: JsonField<Double>,
     private val phoneNumber: JsonField<String>,
@@ -36,6 +37,8 @@ private constructor(
 ) {
 
     private var validated: Boolean = false
+
+    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
 
     fun transactionId(): Optional<String> =
         Optional.ofNullable(transactionId.getNullable("transactionId"))
@@ -61,6 +64,8 @@ private constructor(
     fun dateCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dateCreated.getNullable("date_created"))
 
+    @JsonProperty("id") @ExcludeMissing fun _id() = id
+
     @JsonProperty("transactionId") @ExcludeMissing fun _transactionId() = transactionId
 
     @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
@@ -85,6 +90,7 @@ private constructor(
 
     fun validate(): Transaction = apply {
         if (!validated) {
+            id()
             transactionId()
             amount()
             phoneNumber()
@@ -107,6 +113,7 @@ private constructor(
 
     class Builder {
 
+        private var id: JsonField<String> = JsonMissing.of()
         private var transactionId: JsonField<String> = JsonMissing.of()
         private var amount: JsonField<Double> = JsonMissing.of()
         private var phoneNumber: JsonField<String> = JsonMissing.of()
@@ -120,6 +127,7 @@ private constructor(
 
         @JvmSynthetic
         internal fun from(transaction: Transaction) = apply {
+            this.id = transaction.id
             this.transactionId = transaction.transactionId
             this.amount = transaction.amount
             this.phoneNumber = transaction.phoneNumber
@@ -131,6 +139,10 @@ private constructor(
             this.dateCreated = transaction.dateCreated
             additionalProperties(transaction.additionalProperties)
         }
+
+        fun id(id: String) = id(JsonField.of(id))
+
+        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun transactionId(transactionId: String) = transactionId(JsonField.of(transactionId))
 
@@ -214,6 +226,7 @@ private constructor(
 
         fun build(): Transaction =
             Transaction(
+                id,
                 transactionId,
                 amount,
                 phoneNumber,
@@ -295,18 +308,18 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Transaction && this.transactionId == other.transactionId && this.amount == other.amount && this.phoneNumber == other.phoneNumber && this.accountReference == other.accountReference && this.transactionDesc == other.transactionDesc && this.mpesaRequestId == other.mpesaRequestId && this.status == other.status && this.resultDesc == other.resultDesc && this.dateCreated == other.dateCreated && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Transaction && this.id == other.id && this.transactionId == other.transactionId && this.amount == other.amount && this.phoneNumber == other.phoneNumber && this.accountReference == other.accountReference && this.transactionDesc == other.transactionDesc && this.mpesaRequestId == other.mpesaRequestId && this.status == other.status && this.resultDesc == other.resultDesc && this.dateCreated == other.dateCreated && this.additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     private var hashCode: Int = 0
 
     override fun hashCode(): Int {
         if (hashCode == 0) {
-            hashCode = /* spotless:off */ Objects.hash(transactionId, amount, phoneNumber, accountReference, transactionDesc, mpesaRequestId, status, resultDesc, dateCreated, additionalProperties) /* spotless:on */
+            hashCode = /* spotless:off */ Objects.hash(id, transactionId, amount, phoneNumber, accountReference, transactionDesc, mpesaRequestId, status, resultDesc, dateCreated, additionalProperties) /* spotless:on */
         }
         return hashCode
     }
 
     override fun toString() =
-        "Transaction{transactionId=$transactionId, amount=$amount, phoneNumber=$phoneNumber, accountReference=$accountReference, transactionDesc=$transactionDesc, mpesaRequestId=$mpesaRequestId, status=$status, resultDesc=$resultDesc, dateCreated=$dateCreated, additionalProperties=$additionalProperties}"
+        "Transaction{id=$id, transactionId=$transactionId, amount=$amount, phoneNumber=$phoneNumber, accountReference=$accountReference, transactionDesc=$transactionDesc, mpesaRequestId=$mpesaRequestId, status=$status, resultDesc=$resultDesc, dateCreated=$dateCreated, additionalProperties=$additionalProperties}"
 }

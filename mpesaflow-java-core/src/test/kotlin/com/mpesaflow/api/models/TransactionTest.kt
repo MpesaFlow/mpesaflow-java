@@ -12,6 +12,7 @@ class TransactionTest {
     fun createTransaction() {
         val transaction =
             Transaction.builder()
+                .id("id")
                 .accountReference("accountReference")
                 .amount(42.23)
                 .dateCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -23,6 +24,7 @@ class TransactionTest {
                 .transactionId("transactionId")
                 .build()
         assertThat(transaction).isNotNull
+        assertThat(transaction.id()).contains("id")
         assertThat(transaction.accountReference()).contains("accountReference")
         assertThat(transaction.amount()).contains(42.23)
         assertThat(transaction.dateCreated())

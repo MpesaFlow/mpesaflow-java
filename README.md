@@ -98,7 +98,7 @@ import com.mpesaflow.api.models.Application;
 import com.mpesaflow.api.models.Page;
 
 AppListPage page = client.apps().list();
-for (Application app : page.myData()) {
+for (Application app : page.data()) {
     System.out.println(app);
 }
 ```
@@ -212,7 +212,7 @@ A page of results has a `data()` method to fetch the list of objects, as well as
 ```java
 AppListPage page = client.apps().list(params);
 while (page != null) {
-    for (Application app : page.myData()) {
+    for (Application app : page.data()) {
         System.out.println(app);
     }
 
@@ -328,7 +328,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/MpesaFlow/mpesaflow-java/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/Mpesaflow/mpesaflow-java/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 

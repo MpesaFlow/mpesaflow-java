@@ -38,7 +38,7 @@ class AppServiceTest {
         val appService = client.apps()
         val response = appService.list(AppListParams.builder().build())
         println(response)
-        response.myData().forEach { it.validate() }
+        response.data().forEach { it.validate() }
     }
 
     @Test

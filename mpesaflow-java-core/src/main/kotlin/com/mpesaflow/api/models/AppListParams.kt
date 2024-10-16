@@ -79,10 +79,13 @@ constructor(
             additionalHeaders(appListParams.additionalHeaders)
         }
 
+        /** Cursor for the previous page */
         fun endingBefore(endingBefore: String) = apply { this.endingBefore = endingBefore }
 
+        /** Number of items to return */
         fun limit(limit: Long) = apply { this.limit = limit }
 
+        /** Cursor for the next page */
         fun startingAfter(startingAfter: String) = apply { this.startingAfter = startingAfter }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
