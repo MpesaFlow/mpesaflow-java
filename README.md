@@ -1,6 +1,10 @@
 # Mpesaflow Java API Library
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.mpesaflow.api/mpesaflow-java)](https://central.sonatype.com/artifact/com.mpesaflow.api/mpesaflow-java/0.0.1-alpha.0)
+<!-- x-release-please-start-version -->
+
+[![Maven Central](https://img.shields.io/maven-central/v/com.mpesaflow.api/mpesaflow-java)](https://central.sonatype.com/artifact/com.mpesaflow.api/mpesaflow-java/0.1.0-alpha.1)
+
+<!-- x-release-please-end -->
 
 The Mpesaflow Java SDK provides convenient access to the Mpesaflow REST API from applications written in Java. It includes helper classes with helpful types and documentation for every request and response property.
 
@@ -20,8 +24,10 @@ The REST API documentation can be found on [docs.mpesaflow.com](https://docs.mp
 
 #### Gradle
 
+<!-- x-release-please-start-version -->
+
 ```kotlin
-implementation("com.mpesaflow.api:mpesaflow-java:0.0.1-alpha.0")
+implementation("com.mpesaflow.api:mpesaflow-java:0.1.0-alpha.1")
 ```
 
 #### Maven
@@ -30,9 +36,11 @@ implementation("com.mpesaflow.api:mpesaflow-java:0.0.1-alpha.0")
 <dependency>
     <groupId>com.mpesaflow.api</groupId>
     <artifactId>mpesaflow-java</artifactId>
-    <version>0.0.1-alpha.0</version>
+    <version>0.1.0-alpha.1</version>
 </dependency>
 ```
+
+<!-- x-release-please-end -->
 
 ### Configure the client
 
@@ -320,7 +328,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/mpesaflow-java/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/MpesaFlow/mpesaflow-java/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 
