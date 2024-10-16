@@ -5,7 +5,6 @@ package com.mpesaflow.api.services.blocking
 import com.mpesaflow.api.TestServerExtension
 import com.mpesaflow.api.client.okhttp.MpesaflowOkHttpClient
 import com.mpesaflow.api.models.*
-import com.mpesaflow.api.models.TransactionListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -58,9 +57,16 @@ class TransactionServiceTest {
                 .bearerToken("My Bearer Token")
                 .build()
         val transactionService = client.transactions()
-        val response =
-            transactionService.list(TransactionListParams.builder().appId("appId").build())
-        println(response)
-        response.data().forEach { it.validate() }
+        val transactionListResponse =
+            transactionService.list(
+                TransactionListParams.builder()
+                    .appId("appId")
+                    .endingBefore("ending_before")
+                    .limit(123L)
+                    .startingAfter("starting_after")
+                    .build()
+            )
+        println(transactionListResponse)
+        transactionListResponse.validate()
     }
 }

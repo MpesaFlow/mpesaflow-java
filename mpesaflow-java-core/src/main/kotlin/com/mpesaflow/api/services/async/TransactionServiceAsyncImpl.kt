@@ -15,8 +15,8 @@ import com.mpesaflow.api.errors.MpesaflowError
 import com.mpesaflow.api.models.Transaction
 import com.mpesaflow.api.models.TransactionCreateParams
 import com.mpesaflow.api.models.TransactionCreateResponse
-import com.mpesaflow.api.models.TransactionListPageAsync
 import com.mpesaflow.api.models.TransactionListParams
+import com.mpesaflow.api.models.TransactionListResponse
 import com.mpesaflow.api.models.TransactionRetrieveParams
 import java.util.concurrent.CompletableFuture
 
@@ -87,15 +87,15 @@ constructor(
         }
     }
 
-    private val listHandler: Handler<TransactionListPageAsync.Response> =
-        jsonHandler<TransactionListPageAsync.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<TransactionListResponse> =
+        jsonHandler<TransactionListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /** List all transactions */
     override fun list(
         params: TransactionListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<TransactionListPageAsync> {
+    ): CompletableFuture<TransactionListResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -114,7 +114,6 @@ constructor(
                         validate()
                     }
                 }
-                .let { TransactionListPageAsync.of(this, params, it) }
         }
     }
 }

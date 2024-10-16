@@ -46,9 +46,9 @@ configure<MavenPublishBaseExtension> {
         }
 
         scm {
-            connection.set("scm:git:git://github.com/Mpesaflow/mpesaflow-java.git")
-            developerConnection.set("scm:git:git://github.com/Mpesaflow/mpesaflow-java.git")
-            url.set("https://github.com/Mpesaflow/mpesaflow-java")
+            connection.set("scm:git:git://github.com/MpesaFlow/mpesaflow-java.git")
+            developerConnection.set("scm:git:git://github.com/MpesaFlow/mpesaflow-java.git")
+            url.set("https://github.com/MpesaFlow/mpesaflow-java")
         }
     }
 }

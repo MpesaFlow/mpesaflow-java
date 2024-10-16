@@ -16,8 +16,8 @@ import com.mpesaflow.api.models.AppCreateParams
 import com.mpesaflow.api.models.AppCreateResponse
 import com.mpesaflow.api.models.AppDeleteParams
 import com.mpesaflow.api.models.AppDeleteResponse
-import com.mpesaflow.api.models.AppListPage
 import com.mpesaflow.api.models.AppListParams
+import com.mpesaflow.api.models.AppListResponse
 import com.mpesaflow.api.services.blocking.apps.ApiKeyService
 import com.mpesaflow.api.services.blocking.apps.ApiKeyServiceImpl
 
@@ -61,11 +61,11 @@ constructor(
         }
     }
 
-    private val listHandler: Handler<AppListPage.Response> =
-        jsonHandler<AppListPage.Response>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val listHandler: Handler<AppListResponse> =
+        jsonHandler<AppListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** List all applications */
-    override fun list(params: AppListParams, requestOptions: RequestOptions): AppListPage {
+    override fun list(params: AppListParams, requestOptions: RequestOptions): AppListResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -83,7 +83,6 @@ constructor(
                         validate()
                     }
                 }
-                .let { AppListPage.of(this, params, it) }
         }
     }
 

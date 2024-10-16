@@ -5,7 +5,6 @@ package com.mpesaflow.api.services.blocking
 import com.mpesaflow.api.TestServerExtension
 import com.mpesaflow.api.client.okhttp.MpesaflowOkHttpClient
 import com.mpesaflow.api.models.*
-import com.mpesaflow.api.models.AppListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -36,9 +35,16 @@ class AppServiceTest {
                 .bearerToken("My Bearer Token")
                 .build()
         val appService = client.apps()
-        val response = appService.list(AppListParams.builder().build())
-        println(response)
-        response.data().forEach { it.validate() }
+        val appListResponse =
+            appService.list(
+                AppListParams.builder()
+                    .endingBefore("ending_before")
+                    .limit(123L)
+                    .startingAfter("starting_after")
+                    .build()
+            )
+        println(appListResponse)
+        appListResponse.validate()
     }
 
     @Test

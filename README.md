@@ -88,23 +88,6 @@ AppCreateParams params = AppCreateParams.builder().build();
 AppCreateResponse app = client.apps().create(params);
 ```
 
-### Example: listing resources
-
-The Mpesaflow API provides a `list` method to get a paginated list of apps.
-You can retrieve the first page by:
-
-```java
-import com.mpesaflow.api.models.Application;
-import com.mpesaflow.api.models.Page;
-
-AppListPage page = client.apps().list();
-for (Application app : page.data()) {
-    System.out.println(app);
-}
-```
-
-See [Pagination](#pagination) below for more information on transparently working with lists of objects without worrying about fetching each page.
-
 ---
 
 ## Requests
@@ -168,57 +151,6 @@ JsonValue secret = application._additionalProperties().get("secret_field");
 ```
 
 ---
-
-## Pagination
-
-For methods that return a paginated list of results, this library provides convenient ways access
-the results either one page at a time, or item-by-item across all pages.
-
-### Auto-pagination
-
-To iterate through all results across all pages, you can use `autoPager`,
-which automatically handles fetching more pages for you:
-
-### Synchronous
-
-```java
-// As an Iterable:
-AppListPage page = client.apps().list(params);
-for (Application app : page.autoPager()) {
-    System.out.println(app);
-};
-
-// As a Stream:
-client.apps().list(params).autoPager().stream()
-    .limit(50)
-    .forEach(app -> System.out.println(app));
-```
-
-### Asynchronous
-
-```java
-// Using forEach, which returns CompletableFuture<Void>:
-asyncClient.apps().list(params).autoPager()
-    .forEach(app -> System.out.println(app), executor);
-```
-
-### Manual pagination
-
-If none of the above helpers meet your needs, you can also manually request pages one-by-one.
-A page of results has a `data()` method to fetch the list of objects, as well as top-level
-`response` and other methods to fetch top-level data about the page. It also has methods
-`hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
-
-```java
-AppListPage page = client.apps().list(params);
-while (page != null) {
-    for (Application app : page.data()) {
-        System.out.println(app);
-    }
-
-    page = page.getNextPage().orElse(null);
-}
-```
 
 ---
 
@@ -328,7 +260,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/Mpesaflow/mpesaflow-java/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/MpesaFlow/mpesaflow-java/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 

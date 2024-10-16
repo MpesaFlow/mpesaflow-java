@@ -16,8 +16,8 @@ import com.mpesaflow.api.models.AppApiKeyCreateParams
 import com.mpesaflow.api.models.AppApiKeyCreateResponse
 import com.mpesaflow.api.models.AppApiKeyDeleteParams
 import com.mpesaflow.api.models.AppApiKeyDeleteResponse
-import com.mpesaflow.api.models.AppApiKeyListPageAsync
 import com.mpesaflow.api.models.AppApiKeyListParams
+import com.mpesaflow.api.models.AppApiKeyListResponse
 import java.util.concurrent.CompletableFuture
 
 class ApiKeyServiceAsyncImpl
@@ -58,15 +58,14 @@ constructor(
         }
     }
 
-    private val listHandler: Handler<AppApiKeyListPageAsync.Response> =
-        jsonHandler<AppApiKeyListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val listHandler: Handler<AppApiKeyListResponse> =
+        jsonHandler<AppApiKeyListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** List all API keys for an application */
     override fun list(
         params: AppApiKeyListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<AppApiKeyListPageAsync> {
+    ): CompletableFuture<AppApiKeyListResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -85,7 +84,6 @@ constructor(
                         validate()
                     }
                 }
-                .let { AppApiKeyListPageAsync.of(this, params, it) }
         }
     }
 
