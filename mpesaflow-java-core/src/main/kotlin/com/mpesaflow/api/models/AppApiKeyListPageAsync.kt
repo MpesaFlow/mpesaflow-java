@@ -28,7 +28,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun myData(): List<AppApiKeyListResponse> = response().myData()
+    fun data(): List<AppApiKeyListResponse> = response().data()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -46,7 +46,7 @@ private constructor(
         "AppApiKeyListPageAsync{apiKeysService=$apiKeysService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean {
-        return !myData().isEmpty()
+        return !data().isEmpty()
     }
 
     fun getNextPageParams(): Optional<AppApiKeyListParams> {
@@ -56,17 +56,11 @@ private constructor(
 
         return if (params.endingBefore().isPresent) {
             Optional.of(
-                AppApiKeyListParams.builder()
-                    .from(params)
-                    .endingBefore(myData().first().id())
-                    .build()
+                AppApiKeyListParams.builder().from(params).endingBefore(data().first().id()).build()
             )
         } else {
             Optional.of(
-                AppApiKeyListParams.builder()
-                    .from(params)
-                    .startingAfter(myData().last().id())
-                    .build()
+                AppApiKeyListParams.builder().from(params).startingAfter(data().last().id()).build()
             )
         }
     }
@@ -98,17 +92,16 @@ private constructor(
     @NoAutoDetect
     class Response
     constructor(
-        private val myData: JsonField<List<AppApiKeyListResponse>>,
+        private val data: JsonField<List<AppApiKeyListResponse>>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var validated: Boolean = false
 
-        fun myData(): List<AppApiKeyListResponse> = myData.getNullable("my_data") ?: listOf()
+        fun data(): List<AppApiKeyListResponse> = data.getNullable("data") ?: listOf()
 
-        @JsonProperty("my_data")
-        fun _myData(): Optional<JsonField<List<AppApiKeyListResponse>>> =
-            Optional.ofNullable(myData)
+        @JsonProperty("data")
+        fun _data(): Optional<JsonField<List<AppApiKeyListResponse>>> = Optional.ofNullable(data)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -116,7 +109,7 @@ private constructor(
 
         fun validate(): Response = apply {
             if (!validated) {
-                myData().map { it.validate() }
+                data().map { it.validate() }
                 validated = true
             }
         }
@@ -128,15 +121,15 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Response && this.myData == other.myData && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Response && this.data == other.data && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         override fun hashCode(): Int {
-            return /* spotless:off */ Objects.hash(myData, additionalProperties) /* spotless:on */
+            return /* spotless:off */ Objects.hash(data, additionalProperties) /* spotless:on */
         }
 
         override fun toString() =
-            "AppApiKeyListPageAsync.Response{myData=$myData, additionalProperties=$additionalProperties}"
+            "AppApiKeyListPageAsync.Response{data=$data, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -145,28 +138,26 @@ private constructor(
 
         class Builder {
 
-            private var myData: JsonField<List<AppApiKeyListResponse>> = JsonMissing.of()
+            private var data: JsonField<List<AppApiKeyListResponse>> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(page: Response) = apply {
-                this.myData = page.myData
+                this.data = page.data
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun myData(myData: List<AppApiKeyListResponse>) = myData(JsonField.of(myData))
+            fun data(data: List<AppApiKeyListResponse>) = data(JsonField.of(data))
 
-            @JsonProperty("my_data")
-            fun myData(myData: JsonField<List<AppApiKeyListResponse>>) = apply {
-                this.myData = myData
-            }
+            @JsonProperty("data")
+            fun data(data: JsonField<List<AppApiKeyListResponse>>) = apply { this.data = data }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() = Response(myData, additionalProperties.toUnmodifiable())
+            fun build() = Response(data, additionalProperties.toUnmodifiable())
         }
     }
 
@@ -186,7 +177,7 @@ private constructor(
                 thenComposeAsync(
                     { page ->
                         page
-                            .filter { it.myData().all(action) }
+                            .filter { it.data().all(action) }
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },

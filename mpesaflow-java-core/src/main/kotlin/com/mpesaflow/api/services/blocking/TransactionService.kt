@@ -5,12 +5,12 @@
 package com.mpesaflow.api.services.blocking
 
 import com.mpesaflow.api.core.RequestOptions
+import com.mpesaflow.api.models.Transaction
 import com.mpesaflow.api.models.TransactionCreateParams
 import com.mpesaflow.api.models.TransactionCreateResponse
 import com.mpesaflow.api.models.TransactionListPage
 import com.mpesaflow.api.models.TransactionListParams
 import com.mpesaflow.api.models.TransactionRetrieveParams
-import com.mpesaflow.api.models.TransactionRetrieveResponse
 
 interface TransactionService {
 
@@ -26,7 +26,7 @@ interface TransactionService {
     fun retrieve(
         params: TransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): TransactionRetrieveResponse
+    ): Transaction
 
     /** List all transactions */
     @JvmOverloads
