@@ -5,12 +5,12 @@
 package com.mpesaflow.api.services.async
 
 import com.mpesaflow.api.core.RequestOptions
+import com.mpesaflow.api.models.Transaction
 import com.mpesaflow.api.models.TransactionCreateParams
 import com.mpesaflow.api.models.TransactionCreateResponse
 import com.mpesaflow.api.models.TransactionListPageAsync
 import com.mpesaflow.api.models.TransactionListParams
 import com.mpesaflow.api.models.TransactionRetrieveParams
-import com.mpesaflow.api.models.TransactionRetrieveResponse
 import java.util.concurrent.CompletableFuture
 
 interface TransactionServiceAsync {
@@ -27,7 +27,7 @@ interface TransactionServiceAsync {
     fun retrieve(
         params: TransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<TransactionRetrieveResponse>
+    ): CompletableFuture<Transaction>
 
     /** List all transactions */
     @JvmOverloads

@@ -38,7 +38,7 @@ class ApiKeyServiceTest {
         val apiKeyService = client.apps().apiKeys()
         val response = apiKeyService.list(AppApiKeyListParams.builder().appId("appId").build())
         println(response)
-        response.myData().forEach { it.validate() }
+        response.data().forEach { it.validate() }
     }
 
     @Test

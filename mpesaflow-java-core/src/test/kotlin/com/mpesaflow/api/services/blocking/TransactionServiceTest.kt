@@ -42,12 +42,12 @@ class TransactionServiceTest {
                 .bearerToken("My Bearer Token")
                 .build()
         val transactionService = client.transactions()
-        val transactionRetrieveResponse =
+        val transaction =
             transactionService.retrieve(
                 TransactionRetrieveParams.builder().transactionId("transactionId").build()
             )
-        println(transactionRetrieveResponse)
-        transactionRetrieveResponse.validate()
+        println(transaction)
+        transaction.validate()
     }
 
     @Test
@@ -61,6 +61,6 @@ class TransactionServiceTest {
         val response =
             transactionService.list(TransactionListParams.builder().appId("appId").build())
         println(response)
-        response.myData().forEach { it.validate() }
+        response.data().forEach { it.validate() }
     }
 }

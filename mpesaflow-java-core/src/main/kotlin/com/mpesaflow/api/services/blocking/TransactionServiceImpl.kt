@@ -12,12 +12,12 @@ import com.mpesaflow.api.core.http.HttpRequest
 import com.mpesaflow.api.core.http.HttpResponse.Handler
 import com.mpesaflow.api.core.json
 import com.mpesaflow.api.errors.MpesaflowError
+import com.mpesaflow.api.models.Transaction
 import com.mpesaflow.api.models.TransactionCreateParams
 import com.mpesaflow.api.models.TransactionCreateResponse
 import com.mpesaflow.api.models.TransactionListPage
 import com.mpesaflow.api.models.TransactionListParams
 import com.mpesaflow.api.models.TransactionRetrieveParams
-import com.mpesaflow.api.models.TransactionRetrieveResponse
 
 class TransactionServiceImpl
 constructor(
@@ -56,15 +56,14 @@ constructor(
         }
     }
 
-    private val retrieveHandler: Handler<TransactionRetrieveResponse> =
-        jsonHandler<TransactionRetrieveResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val retrieveHandler: Handler<Transaction> =
+        jsonHandler<Transaction>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Get transaction details */
     override fun retrieve(
         params: TransactionRetrieveParams,
         requestOptions: RequestOptions
-    ): TransactionRetrieveResponse {
+    ): Transaction {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
