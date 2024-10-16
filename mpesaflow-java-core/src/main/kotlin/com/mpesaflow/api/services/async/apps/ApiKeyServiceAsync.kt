@@ -9,8 +9,8 @@ import com.mpesaflow.api.models.AppApiKeyCreateParams
 import com.mpesaflow.api.models.AppApiKeyCreateResponse
 import com.mpesaflow.api.models.AppApiKeyDeleteParams
 import com.mpesaflow.api.models.AppApiKeyDeleteResponse
-import com.mpesaflow.api.models.AppApiKeyListPageAsync
 import com.mpesaflow.api.models.AppApiKeyListParams
+import com.mpesaflow.api.models.AppApiKeyListResponse
 import java.util.concurrent.CompletableFuture
 
 interface ApiKeyServiceAsync {
@@ -27,7 +27,7 @@ interface ApiKeyServiceAsync {
     fun list(
         params: AppApiKeyListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<AppApiKeyListPageAsync>
+    ): CompletableFuture<AppApiKeyListResponse>
 
     /** Delete an API key */
     @JvmOverloads

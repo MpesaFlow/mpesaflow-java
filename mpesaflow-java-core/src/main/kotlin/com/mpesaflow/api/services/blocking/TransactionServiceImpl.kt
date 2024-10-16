@@ -15,8 +15,8 @@ import com.mpesaflow.api.errors.MpesaflowError
 import com.mpesaflow.api.models.Transaction
 import com.mpesaflow.api.models.TransactionCreateParams
 import com.mpesaflow.api.models.TransactionCreateResponse
-import com.mpesaflow.api.models.TransactionListPage
 import com.mpesaflow.api.models.TransactionListParams
+import com.mpesaflow.api.models.TransactionListResponse
 import com.mpesaflow.api.models.TransactionRetrieveParams
 
 class TransactionServiceImpl
@@ -84,15 +84,15 @@ constructor(
         }
     }
 
-    private val listHandler: Handler<TransactionListPage.Response> =
-        jsonHandler<TransactionListPage.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<TransactionListResponse> =
+        jsonHandler<TransactionListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /** List all transactions */
     override fun list(
         params: TransactionListParams,
         requestOptions: RequestOptions
-    ): TransactionListPage {
+    ): TransactionListResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -110,7 +110,6 @@ constructor(
                         validate()
                     }
                 }
-                .let { TransactionListPage.of(this, params, it) }
         }
     }
 }

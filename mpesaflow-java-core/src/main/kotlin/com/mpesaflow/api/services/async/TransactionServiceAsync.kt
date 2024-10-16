@@ -8,8 +8,8 @@ import com.mpesaflow.api.core.RequestOptions
 import com.mpesaflow.api.models.Transaction
 import com.mpesaflow.api.models.TransactionCreateParams
 import com.mpesaflow.api.models.TransactionCreateResponse
-import com.mpesaflow.api.models.TransactionListPageAsync
 import com.mpesaflow.api.models.TransactionListParams
+import com.mpesaflow.api.models.TransactionListResponse
 import com.mpesaflow.api.models.TransactionRetrieveParams
 import java.util.concurrent.CompletableFuture
 
@@ -34,5 +34,5 @@ interface TransactionServiceAsync {
     fun list(
         params: TransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<TransactionListPageAsync>
+    ): CompletableFuture<TransactionListResponse>
 }

@@ -9,8 +9,8 @@ import com.mpesaflow.api.models.AppCreateParams
 import com.mpesaflow.api.models.AppCreateResponse
 import com.mpesaflow.api.models.AppDeleteParams
 import com.mpesaflow.api.models.AppDeleteResponse
-import com.mpesaflow.api.models.AppListPage
 import com.mpesaflow.api.models.AppListParams
+import com.mpesaflow.api.models.AppListResponse
 import com.mpesaflow.api.services.blocking.apps.ApiKeyService
 
 interface AppService {
@@ -29,7 +29,7 @@ interface AppService {
     fun list(
         params: AppListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): AppListPage
+    ): AppListResponse
 
     /** Delete an application */
     @JvmOverloads
