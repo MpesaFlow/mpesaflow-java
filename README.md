@@ -14,7 +14,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.mpesaflow.com](https://docs.mpesaflow.com).
+The REST API documentation can be found on [docs.mpesaflow.com](https://docs.mpesaflow.com/).
 
 ---
 
@@ -55,7 +55,7 @@ MpesaflowClient client = MpesaflowOkHttpClient.builder()
     .build();
 ```
 
-Alternately, set the environment with `BEARER_TOKEN`, and use `MpesaflowOkHttpClient.fromEnv()` to read from the environment.
+Alternately, set the environment with `MPESAFLOW_API_TOKEN`, and use `MpesaflowOkHttpClient.fromEnv()` to read from the environment.
 
 ```java
 MpesaflowClient client = MpesaflowOkHttpClient.fromEnv();
@@ -67,9 +67,9 @@ MpesaflowClient client = MpesaflowOkHttpClient.builder()
     .build();
 ```
 
-| Property    | Environment variable | Required | Default value |
-| ----------- | -------------------- | -------- | ------------- |
-| bearerToken | `BEARER_TOKEN`       | true     | —             |
+| Property    | Environment variable  | Required | Default value |
+| ----------- | --------------------- | -------- | ------------- |
+| bearerToken | `MPESAFLOW_API_TOKEN` | true     | —             |
 
 Read the documentation for more configuration options.
 

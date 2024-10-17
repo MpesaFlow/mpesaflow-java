@@ -98,7 +98,7 @@ private constructor(
 
         fun bearerToken(bearerToken: String) = apply { this.bearerToken = bearerToken }
 
-        fun fromEnv() = apply { System.getenv("BEARER_TOKEN")?.let { bearerToken(it) } }
+        fun fromEnv() = apply { System.getenv("MPESAFLOW_API_TOKEN")?.let { bearerToken(it) } }
 
         fun build(): ClientOptions {
             checkNotNull(httpClient) { "`httpClient` is required but was not set" }
