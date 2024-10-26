@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.2 (2024-10-26)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/MpesaFlow/mpesaflow-java/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### Chores
+
+* update SDK settings ([#11](https://github.com/MpesaFlow/mpesaflow-java/issues/11)) ([85135ff](https://github.com/MpesaFlow/mpesaflow-java/commit/85135ff8da15834fe28236d0af00e71089e9c528))
+
 ## 0.1.0-alpha.1 (2024-10-17)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/MpesaFlow/mpesaflow-java/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)
