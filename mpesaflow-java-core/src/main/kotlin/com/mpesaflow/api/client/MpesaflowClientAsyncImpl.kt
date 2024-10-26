@@ -4,6 +4,7 @@ package com.mpesaflow.api.client
 
 import com.mpesaflow.api.core.ClientOptions
 import com.mpesaflow.api.core.RequestOptions
+import com.mpesaflow.api.core.getPackageVersion
 import com.mpesaflow.api.core.handlers.errorHandler
 import com.mpesaflow.api.core.handlers.stringHandler
 import com.mpesaflow.api.core.handlers.withErrorHandler
@@ -20,14 +21,23 @@ constructor(
     private val clientOptions: ClientOptions,
 ) : MpesaflowClientAsync {
 
+    private val clientOptionsWithUserAgent =
+        if (clientOptions.headers.containsKey("User-Agent")) clientOptions
+        else
+            clientOptions
+                .toBuilder()
+                .putHeader("User-Agent", "${javaClass.simpleName}/Java ${getPackageVersion()}")
+                .build()
+
     private val errorHandler: Handler<MpesaflowError> = errorHandler(clientOptions.jsonMapper)
 
+    // Pass the original clientOptions so that this client sets its own User-Agent.
     private val sync: MpesaflowClient by lazy { MpesaflowClientImpl(clientOptions) }
 
-    private val apps: AppServiceAsync by lazy { AppServiceAsyncImpl(clientOptions) }
+    private val apps: AppServiceAsync by lazy { AppServiceAsyncImpl(clientOptionsWithUserAgent) }
 
     private val transactions: TransactionServiceAsync by lazy {
-        TransactionServiceAsyncImpl(clientOptions)
+        TransactionServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
     override fun sync(): MpesaflowClient = sync
