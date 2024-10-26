@@ -23,7 +23,7 @@ class MpesaflowOkHttpClient private constructor() {
 
         private var clientOptions: ClientOptions.Builder = ClientOptions.builder()
         private var baseUrl: String = ClientOptions.PRODUCTION_URL
-        // default timeout for client is 1 minute
+        // The default timeout for the client is 1 minute.
         private var timeout: Duration = Duration.ofSeconds(60)
         private var proxy: Proxy? = null
 
@@ -68,8 +68,8 @@ class MpesaflowOkHttpClient private constructor() {
 
         fun fromEnv() = apply { clientOptions.fromEnv() }
 
-        fun build(): MpesaflowClient {
-            return MpesaflowClientImpl(
+        fun build(): MpesaflowClient =
+            MpesaflowClientImpl(
                 clientOptions
                     .httpClient(
                         OkHttpClient.builder()
@@ -80,6 +80,5 @@ class MpesaflowOkHttpClient private constructor() {
                     )
                     .build()
             )
-        }
     }
 }
