@@ -16,8 +16,8 @@ import com.mpesaflow.api.models.AppApiKeyCreateParams
 import com.mpesaflow.api.models.AppApiKeyCreateResponse
 import com.mpesaflow.api.models.AppApiKeyDeleteParams
 import com.mpesaflow.api.models.AppApiKeyDeleteResponse
+import com.mpesaflow.api.models.AppApiKeyListPage
 import com.mpesaflow.api.models.AppApiKeyListParams
-import com.mpesaflow.api.models.AppApiKeyListResponse
 
 class ApiKeyServiceImpl
 constructor(
@@ -56,14 +56,15 @@ constructor(
         }
     }
 
-    private val listHandler: Handler<AppApiKeyListResponse> =
-        jsonHandler<AppApiKeyListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val listHandler: Handler<AppApiKeyListPage.Response> =
+        jsonHandler<AppApiKeyListPage.Response>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /** List all API keys for an application */
     override fun list(
         params: AppApiKeyListParams,
         requestOptions: RequestOptions
-    ): AppApiKeyListResponse {
+    ): AppApiKeyListPage {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -81,6 +82,7 @@ constructor(
                         validate()
                     }
                 }
+                .let { AppApiKeyListPage.of(this, params, it) }
         }
     }
 

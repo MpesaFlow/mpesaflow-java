@@ -9,8 +9,8 @@ import com.mpesaflow.api.models.AppApiKeyCreateParams
 import com.mpesaflow.api.models.AppApiKeyCreateResponse
 import com.mpesaflow.api.models.AppApiKeyDeleteParams
 import com.mpesaflow.api.models.AppApiKeyDeleteResponse
+import com.mpesaflow.api.models.AppApiKeyListPage
 import com.mpesaflow.api.models.AppApiKeyListParams
-import com.mpesaflow.api.models.AppApiKeyListResponse
 
 interface ApiKeyService {
 
@@ -26,7 +26,7 @@ interface ApiKeyService {
     fun list(
         params: AppApiKeyListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): AppApiKeyListResponse
+    ): AppApiKeyListPage
 
     /** Delete an API key */
     @JvmOverloads

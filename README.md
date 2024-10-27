@@ -80,6 +80,23 @@ TransactionCreateParams params = TransactionCreateParams.builder().build();
 TransactionCreateResponse transaction = client.transactions().create(params);
 ```
 
+### Example: listing resources
+
+The Mpesaflow API provides a `list` method to get a paginated list of transactions.
+You can retrieve the first page by:
+
+```java
+import com.mpesaflow.api.models.Page;
+import com.mpesaflow.api.models.Transaction;
+
+TransactionListPage page = client.transactions().list();
+for (Transaction transaction : page.data()) {
+    System.out.println(transaction);
+}
+```
+
+See [Pagination](#pagination) below for more information on transparently working with lists of objects without worrying about fetching each page.
+
 ---
 
 ## Requests
@@ -143,6 +160,57 @@ JsonValue secret = application._additionalProperties().get("secret_field");
 ```
 
 ---
+
+## Pagination
+
+For methods that return a paginated list of results, this library provides convenient ways access
+the results either one page at a time, or item-by-item across all pages.
+
+### Auto-pagination
+
+To iterate through all results across all pages, you can use `autoPager`,
+which automatically handles fetching more pages for you:
+
+### Synchronous
+
+```java
+// As an Iterable:
+TransactionListPage page = client.transactions().list(params);
+for (Transaction transaction : page.autoPager()) {
+    System.out.println(transaction);
+};
+
+// As a Stream:
+client.transactions().list(params).autoPager().stream()
+    .limit(50)
+    .forEach(transaction -> System.out.println(transaction));
+```
+
+### Asynchronous
+
+```java
+// Using forEach, which returns CompletableFuture<Void>:
+asyncClient.transactions().list(params).autoPager()
+    .forEach(transaction -> System.out.println(transaction), executor);
+```
+
+### Manual pagination
+
+If none of the above helpers meet your needs, you can also manually request pages one-by-one.
+A page of results has a `data()` method to fetch the list of objects, as well as top-level
+`response` and other methods to fetch top-level data about the page. It also has methods
+`hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
+
+```java
+TransactionListPage page = client.transactions().list(params);
+while (page != null) {
+    for (Transaction transaction : page.data()) {
+        System.out.println(transaction);
+    }
+
+    page = page.getNextPage().orElse(null);
+}
+```
 
 ---
 

@@ -9,8 +9,8 @@ import com.mpesaflow.api.models.AppCreateParams
 import com.mpesaflow.api.models.AppCreateResponse
 import com.mpesaflow.api.models.AppDeleteParams
 import com.mpesaflow.api.models.AppDeleteResponse
+import com.mpesaflow.api.models.AppListPageAsync
 import com.mpesaflow.api.models.AppListParams
-import com.mpesaflow.api.models.AppListResponse
 import com.mpesaflow.api.services.async.apps.ApiKeyServiceAsync
 import java.util.concurrent.CompletableFuture
 
@@ -30,7 +30,7 @@ interface AppServiceAsync {
     fun list(
         params: AppListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<AppListResponse>
+    ): CompletableFuture<AppListPageAsync>
 
     /** Delete an application */
     @JvmOverloads

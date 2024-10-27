@@ -11,24 +11,13 @@ class AppApiKeyListResponseTest {
     fun createAppApiKeyListResponse() {
         val appApiKeyListResponse =
             AppApiKeyListResponse.builder()
-                .data(
-                    listOf(
-                        AppApiKeyListResponse.Data.builder()
-                            .id("id")
-                            .applicationId("applicationId")
-                            .keyName("keyName")
-                            .build()
-                    )
-                )
+                .id("id")
+                .applicationId("applicationId")
+                .keyName("keyName")
                 .build()
         assertThat(appApiKeyListResponse).isNotNull
-        assertThat(appApiKeyListResponse.data().get())
-            .containsExactly(
-                AppApiKeyListResponse.Data.builder()
-                    .id("id")
-                    .applicationId("applicationId")
-                    .keyName("keyName")
-                    .build()
-            )
+        assertThat(appApiKeyListResponse.id()).contains("id")
+        assertThat(appApiKeyListResponse.applicationId()).contains("applicationId")
+        assertThat(appApiKeyListResponse.keyName()).contains("keyName")
     }
 }

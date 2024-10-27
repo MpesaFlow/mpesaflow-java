@@ -16,8 +16,8 @@ import com.mpesaflow.api.models.AppCreateParams
 import com.mpesaflow.api.models.AppCreateResponse
 import com.mpesaflow.api.models.AppDeleteParams
 import com.mpesaflow.api.models.AppDeleteResponse
+import com.mpesaflow.api.models.AppListPageAsync
 import com.mpesaflow.api.models.AppListParams
-import com.mpesaflow.api.models.AppListResponse
 import com.mpesaflow.api.services.async.apps.ApiKeyServiceAsync
 import com.mpesaflow.api.services.async.apps.ApiKeyServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
@@ -63,14 +63,15 @@ constructor(
         }
     }
 
-    private val listHandler: Handler<AppListResponse> =
-        jsonHandler<AppListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val listHandler: Handler<AppListPageAsync.Response> =
+        jsonHandler<AppListPageAsync.Response>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /** List all applications */
     override fun list(
         params: AppListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<AppListResponse> {
+    ): CompletableFuture<AppListPageAsync> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -89,6 +90,7 @@ constructor(
                         validate()
                     }
                 }
+                .let { AppListPageAsync.of(this, params, it) }
         }
     }
 

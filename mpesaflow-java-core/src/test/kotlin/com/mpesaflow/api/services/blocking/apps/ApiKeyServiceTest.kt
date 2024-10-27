@@ -5,6 +5,7 @@ package com.mpesaflow.api.services.blocking.apps
 import com.mpesaflow.api.TestServerExtension
 import com.mpesaflow.api.client.okhttp.MpesaflowOkHttpClient
 import com.mpesaflow.api.models.*
+import com.mpesaflow.api.models.AppApiKeyListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -35,17 +36,9 @@ class ApiKeyServiceTest {
                 .appApiKey("My App API Key")
                 .build()
         val apiKeyService = client.apps().apiKeys()
-        val appApiKeyListResponse =
-            apiKeyService.list(
-                AppApiKeyListParams.builder()
-                    .appId("appId")
-                    .endingBefore("ending_before")
-                    .limit(123L)
-                    .startingAfter("starting_after")
-                    .build()
-            )
-        println(appApiKeyListResponse)
-        appApiKeyListResponse.validate()
+        val response = apiKeyService.list(AppApiKeyListParams.builder().appId("appId").build())
+        println(response)
+        response.data().forEach { it.validate() }
     }
 
     @Test
