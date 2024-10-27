@@ -27,7 +27,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
+    fun id(): String = id.getRequired("id")
 
     fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
 

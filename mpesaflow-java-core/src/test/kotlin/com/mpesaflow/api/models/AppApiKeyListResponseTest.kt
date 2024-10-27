@@ -16,7 +16,7 @@ class AppApiKeyListResponseTest {
                 .keyName("keyName")
                 .build()
         assertThat(appApiKeyListResponse).isNotNull
-        assertThat(appApiKeyListResponse.id()).contains("id")
+        assertThat(appApiKeyListResponse.id()).isEqualTo("id")
         assertThat(appApiKeyListResponse.applicationId()).contains("applicationId")
         assertThat(appApiKeyListResponse.keyName()).contains("keyName")
     }
