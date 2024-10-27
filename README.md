@@ -156,7 +156,7 @@ if (field.isMissing()) {
 Sometimes, the server response may include additional properties that are not yet available in this library's types. You can access them using the model's `_additionalProperties` method:
 
 ```java
-JsonValue secret = clientHealthResponse._additionalProperties().get("secret_field");
+JsonValue secret = application._additionalProperties().get("secret_field");
 ```
 
 ---
