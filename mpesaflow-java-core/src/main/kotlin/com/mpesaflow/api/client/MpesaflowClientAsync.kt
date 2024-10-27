@@ -12,4 +12,6 @@ interface MpesaflowClientAsync {
     fun apps(): AppServiceAsync
 
     fun transactions(): TransactionServiceAsync
+
+    fun health(): HealthServiceAsync
 }
