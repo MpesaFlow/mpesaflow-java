@@ -14,7 +14,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.mpesaflow.com](https://docs.mpesaflow.com/).
+The REST API documentation can be found on [docs.mpesaflow.com](https://docs.mpesaflow.com).
 
 ---
 
@@ -44,18 +44,9 @@ implementation("com.mpesaflow.api:mpesaflow-java:0.1.0-alpha.2")
 
 ### Configure the client
 
-Use `MpesaflowOkHttpClient.builder()` to configure the client. At a minimum you need to set `.bearerToken()`:
+Use `MpesaflowOkHttpClient.builder()` to configure the client.
 
-```java
-import com.mpesaflow.api.client.MpesaflowClient;
-import com.mpesaflow.api.client.okhttp.MpesaflowOkHttpClient;
-
-MpesaflowClient client = MpesaflowOkHttpClient.builder()
-    .bearerToken("My Bearer Token")
-    .build();
-```
-
-Alternately, set the environment with `MPESAFLOW_API_TOKEN`, and use `MpesaflowOkHttpClient.fromEnv()` to read from the environment.
+Alternately, set the environment with `APP_API_KEY` or `ROOT_API_KEY`, and use `MpesaflowOkHttpClient.fromEnv()` to read from the environment.
 
 ```java
 MpesaflowClient client = MpesaflowOkHttpClient.fromEnv();
@@ -67,9 +58,10 @@ MpesaflowClient client = MpesaflowOkHttpClient.builder()
     .build();
 ```
 
-| Property    | Environment variable  | Required | Default value |
-| ----------- | --------------------- | -------- | ------------- |
-| bearerToken | `MPESAFLOW_API_TOKEN` | true     | —             |
+| Property   | Environment variable | Required | Default value |
+| ---------- | -------------------- | -------- | ------------- |
+| appApiKey  | `APP_API_KEY`        | false    | —             |
+| rootApiKey | `ROOT_API_KEY`       | false    | —             |
 
 Read the documentation for more configuration options.
 
@@ -77,15 +69,15 @@ Read the documentation for more configuration options.
 
 ### Example: creating a resource
 
-To create a new app, first use the `AppCreateParams` builder to specify attributes,
-then pass that to the `create` method of the `apps` service.
+To create a new transaction, first use the `TransactionCreateParams` builder to specify attributes,
+then pass that to the `create` method of the `transactions` service.
 
 ```java
-import com.mpesaflow.api.models.AppCreateParams;
-import com.mpesaflow.api.models.AppCreateResponse;
+import com.mpesaflow.api.models.TransactionCreateParams;
+import com.mpesaflow.api.models.TransactionCreateResponse;
 
-AppCreateParams params = AppCreateParams.builder().build();
-AppCreateResponse app = client.apps().create(params);
+TransactionCreateParams params = TransactionCreateParams.builder().build();
+TransactionCreateResponse transaction = client.transactions().create(params);
 ```
 
 ---
@@ -96,15 +88,15 @@ AppCreateResponse app = client.apps().create(params);
 
 To make a request to the Mpesaflow API, you generally build an instance of the appropriate `Params` class.
 
-In [Example: creating a resource](#example-creating-a-resource) above, we used the `AppCreateParams.builder()` to pass to
-the `create` method of the `apps` service.
+In [Example: creating a resource](#example-creating-a-resource) above, we used the `TransactionCreateParams.builder()` to pass to
+the `create` method of the `transactions` service.
 
 Sometimes, the API may support other properties that are not yet supported in the Java SDK types. In that case,
 you can attach them using the `putAdditionalProperty` method.
 
 ```java
 import com.mpesaflow.api.models.core.JsonValue;
-AppCreateParams params = AppCreateParams.builder()
+TransactionCreateParams params = TransactionCreateParams.builder()
     // ... normal properties
     .putAdditionalProperty("secret_param", JsonValue.from("4242"))
     .build();
@@ -117,7 +109,7 @@ AppCreateParams params = AppCreateParams.builder()
 When receiving a response, the Mpesaflow Java SDK will deserialize it into instances of the typed model classes. In rare cases, the API may return a response property that doesn't match the expected Java type. If you directly access the mistaken property, the SDK will throw an unchecked `MpesaflowInvalidDataException` at runtime. If you would prefer to check in advance that that response is completely well-typed, call `.validate()` on the returned model.
 
 ```java
-AppCreateResponse app = client.apps().create().validate();
+TransactionCreateResponse transaction = client.transactions().create().validate();
 ```
 
 ### Response properties as JSON

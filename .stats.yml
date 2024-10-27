@@ -1,2 +1,2 @@
-configured_endpoints: 10
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/mpesaflow%2Fmpesaflow-4bc40fd347fa692b02f059e52406d6b44f2848e9f1c10def1ca216164f17754d.yml
+configured_endpoints: 9
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/mpesaflow%2Fmpesaflow-3c8c7871b328cd83a53470cb9f020b601f0d6694c2390ebd23fe95c911db9307.yml
