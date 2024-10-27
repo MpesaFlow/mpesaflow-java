@@ -12,7 +12,7 @@ class ApplicationTest {
         val application =
             Application.builder().id("id").description("description").name("name").build()
         assertThat(application).isNotNull
-        assertThat(application.id()).contains("id")
+        assertThat(application.id()).isEqualTo("id")
         assertThat(application.description()).contains("description")
         assertThat(application.name()).contains("name")
     }

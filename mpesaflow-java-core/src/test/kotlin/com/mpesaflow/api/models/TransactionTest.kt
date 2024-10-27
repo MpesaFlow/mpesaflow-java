@@ -24,7 +24,7 @@ class TransactionTest {
                 .transactionId("transactionId")
                 .build()
         assertThat(transaction).isNotNull
-        assertThat(transaction.id()).contains("id")
+        assertThat(transaction.id()).isEqualTo("id")
         assertThat(transaction.accountReference()).contains("accountReference")
         assertThat(transaction.amount()).contains(42.23)
         assertThat(transaction.dateCreated())
