@@ -3,7 +3,15 @@
 package com.mpesaflow.api.client
 
 import com.mpesaflow.api.core.ClientOptions
+import com.mpesaflow.api.core.RequestOptions
 import com.mpesaflow.api.core.getPackageVersion
+import com.mpesaflow.api.core.handlers.errorHandler
+import com.mpesaflow.api.core.handlers.jsonHandler
+import com.mpesaflow.api.core.handlers.withErrorHandler
+import com.mpesaflow.api.core.http.HttpMethod
+import com.mpesaflow.api.core.http.HttpRequest
+import com.mpesaflow.api.core.http.HttpResponse.Handler
+import com.mpesaflow.api.errors.MpesaflowError
 import com.mpesaflow.api.models.*
 import com.mpesaflow.api.services.blocking.*
 
@@ -20,6 +28,8 @@ constructor(
                 .putHeader("User-Agent", "${javaClass.simpleName}/Java ${getPackageVersion()}")
                 .build()
 
+    private val errorHandler: Handler<MpesaflowError> = errorHandler(clientOptions.jsonMapper)
+
     // Pass the original clientOptions so that this client sets its own User-Agent.
     private val async: MpesaflowClientAsync by lazy { MpesaflowClientAsyncImpl(clientOptions) }
 
@@ -29,13 +39,37 @@ constructor(
         TransactionServiceImpl(clientOptionsWithUserAgent)
     }
 
-    private val health: HealthService by lazy { HealthServiceImpl(clientOptionsWithUserAgent) }
-
     override fun async(): MpesaflowClientAsync = async
 
     override fun apps(): AppService = apps
 
     override fun transactions(): TransactionService = transactions
 
-    override fun health(): HealthService = health
+    private val healthHandler: Handler<ClientHealthResponse> =
+        jsonHandler<ClientHealthResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /** Check server health */
+    override fun health(
+        params: ClientHealthParams,
+        requestOptions: RequestOptions
+    ): ClientHealthResponse {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.GET)
+                .addPathSegments("health")
+                .putAllQueryParams(clientOptions.queryParams)
+                .putAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .putAllHeaders(params.getHeaders())
+                .build()
+        return clientOptions.httpClient.execute(request, requestOptions).let { response ->
+            response
+                .use { healthHandler.handle(it) }
+                .apply {
+                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                        validate()
+                    }
+                }
+        }
+    }
 }
