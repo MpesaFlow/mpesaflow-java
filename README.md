@@ -14,7 +14,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.mpesaflow.com](https://docs.mpesaflow.com).
+The REST API documentation can be found on [docs.mpesaflow.com](https://docs.mpesaflow.com/).
 
 ---
 
