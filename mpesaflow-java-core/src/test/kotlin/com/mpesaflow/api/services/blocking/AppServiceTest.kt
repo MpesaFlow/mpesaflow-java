@@ -16,7 +16,7 @@ class AppServiceTest {
         val client =
             MpesaflowOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
-                .bearerToken("My Bearer Token")
+                .appApiKey("My App API Key")
                 .build()
         val appService = client.apps()
         val appCreateResponse =
@@ -32,7 +32,7 @@ class AppServiceTest {
         val client =
             MpesaflowOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
-                .bearerToken("My Bearer Token")
+                .appApiKey("My App API Key")
                 .build()
         val appService = client.apps()
         val appListResponse =
@@ -52,7 +52,7 @@ class AppServiceTest {
         val client =
             MpesaflowOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
-                .bearerToken("My Bearer Token")
+                .appApiKey("My App API Key")
                 .build()
         val appService = client.apps()
         val appDeleteResponse = appService.delete(AppDeleteParams.builder().appId("appId").build())

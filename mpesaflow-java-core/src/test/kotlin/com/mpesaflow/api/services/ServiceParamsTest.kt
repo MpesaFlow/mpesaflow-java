@@ -35,13 +35,14 @@ class ServiceParamsTest {
     fun beforeEach(wmRuntimeInfo: WireMockRuntimeInfo) {
         client =
             MpesaflowOkHttpClient.builder()
-                .bearerToken("My Bearer Token")
+                .appApiKey("My App API Key")
+                .rootApiKey("My Root API Key")
                 .baseUrl(wmRuntimeInfo.getHttpBaseUrl())
                 .build()
     }
 
     @Test
-    fun appsCreateWithAdditionalParams() {
+    fun transactionsCreateWithAdditionalParams() {
         val additionalHeaders = mutableMapOf<String, List<String>>()
 
         additionalHeaders.put("x-test-header", listOf("abc1234"))
@@ -55,16 +56,22 @@ class ServiceParamsTest {
         additionalBodyProperties.put("testBodyProperty", JsonString.of("ghi890"))
 
         val params =
-            AppCreateParams.builder()
-                .description("description")
-                .name("name")
+            TransactionCreateParams.builder()
+                .accountReference("accountReference")
+                .amount(42.23)
+                .mpesaRequestId("mpesaRequestId")
+                .phoneNumber("phoneNumber")
+                .transactionDesc("transactionDesc")
                 .additionalHeaders(additionalHeaders)
                 .additionalBodyProperties(additionalBodyProperties)
                 .additionalQueryParams(additionalQueryParams)
                 .build()
 
         val apiResponse =
-            AppCreateResponse.builder().applicationId("applicationId").message("message").build()
+            TransactionCreateResponse.builder()
+                .message("message")
+                .transactionId("transactionId")
+                .build()
 
         stubFor(
             post(anyUrl())
@@ -74,7 +81,7 @@ class ServiceParamsTest {
                 .willReturn(ok(JSON_MAPPER.writeValueAsString(apiResponse)))
         )
 
-        client.apps().create(params)
+        client.transactions().create(params)
 
         verify(postRequestedFor(anyUrl()))
     }

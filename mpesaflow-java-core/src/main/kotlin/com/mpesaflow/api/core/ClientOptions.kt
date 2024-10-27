@@ -16,7 +16,8 @@ private constructor(
     @get:JvmName("jsonMapper") val jsonMapper: JsonMapper,
     @get:JvmName("clock") val clock: Clock,
     @get:JvmName("baseUrl") val baseUrl: String,
-    @get:JvmName("bearerToken") val bearerToken: String,
+    @get:JvmName("appApiKey") val appApiKey: String?,
+    @get:JvmName("rootApiKey") val rootApiKey: String?,
     @get:JvmName("headers") val headers: ListMultimap<String, String>,
     @get:JvmName("queryParams") val queryParams: ListMultimap<String, String>,
     @get:JvmName("responseValidation") val responseValidation: Boolean,
@@ -46,7 +47,8 @@ private constructor(
         private var queryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var responseValidation: Boolean = false
         private var maxRetries: Int = 2
-        private var bearerToken: String? = null
+        private var appApiKey: String? = null
+        private var rootApiKey: String? = null
 
         @JvmSynthetic
         internal fun from(clientOptions: ClientOptions) = apply {
@@ -64,7 +66,8 @@ private constructor(
                 }
             responseValidation = clientOptions.responseValidation
             maxRetries = clientOptions.maxRetries
-            bearerToken = clientOptions.bearerToken
+            appApiKey = clientOptions.appApiKey
+            rootApiKey = clientOptions.rootApiKey
         }
 
         fun httpClient(httpClient: HttpClient) = apply { this.httpClient = httpClient }
@@ -119,13 +122,17 @@ private constructor(
 
         fun maxRetries(maxRetries: Int) = apply { this.maxRetries = maxRetries }
 
-        fun bearerToken(bearerToken: String) = apply { this.bearerToken = bearerToken }
+        fun appApiKey(appApiKey: String?) = apply { this.appApiKey = appApiKey }
 
-        fun fromEnv() = apply { System.getenv("MPESAFLOW_API_TOKEN")?.let { bearerToken(it) } }
+        fun rootApiKey(rootApiKey: String?) = apply { this.rootApiKey = rootApiKey }
+
+        fun fromEnv() = apply {
+            System.getenv("APP_API_KEY")?.let { appApiKey(it) }
+            System.getenv("ROOT_API_KEY")?.let { rootApiKey(it) }
+        }
 
         fun build(): ClientOptions {
             checkNotNull(httpClient) { "`httpClient` is required but was not set" }
-            checkNotNull(bearerToken) { "`bearerToken` is required but was not set" }
 
             val headers = ArrayListMultimap.create<String, String>()
             val queryParams = ArrayListMultimap.create<String, String>()
@@ -136,8 +143,11 @@ private constructor(
             headers.put("X-Stainless-Package-Version", getPackageVersion())
             headers.put("X-Stainless-Runtime", "JRE")
             headers.put("X-Stainless-Runtime-Version", getJavaVersion())
-            if (!bearerToken.isNullOrEmpty()) {
-                headers.put("Authorization", "Bearer ${bearerToken}")
+            if (!appApiKey.isNullOrEmpty()) {
+                headers.put("X-App-Api-Key", appApiKey)
+            }
+            if (!rootApiKey.isNullOrEmpty()) {
+                headers.put("X-Root-Api-Key", rootApiKey)
             }
             this.headers.forEach(headers::replaceValues)
             this.queryParams.forEach(queryParams::replaceValues)
@@ -152,7 +162,8 @@ private constructor(
                 jsonMapper ?: jsonMapper(),
                 clock,
                 baseUrl,
-                bearerToken!!,
+                appApiKey,
+                rootApiKey,
                 headers.toUnmodifiable(),
                 queryParams.toUnmodifiable(),
                 responseValidation,

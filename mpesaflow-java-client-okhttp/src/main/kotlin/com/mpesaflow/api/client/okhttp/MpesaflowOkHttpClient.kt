@@ -64,7 +64,9 @@ class MpesaflowOkHttpClient private constructor() {
             clientOptions.responseValidation(responseValidation)
         }
 
-        fun bearerToken(bearerToken: String) = apply { clientOptions.bearerToken(bearerToken) }
+        fun appApiKey(appApiKey: String?) = apply { clientOptions.appApiKey(appApiKey) }
+
+        fun rootApiKey(rootApiKey: String?) = apply { clientOptions.rootApiKey(rootApiKey) }
 
         fun fromEnv() = apply { clientOptions.fromEnv() }
 

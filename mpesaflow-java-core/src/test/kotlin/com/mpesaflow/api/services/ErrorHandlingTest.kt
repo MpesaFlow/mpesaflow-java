@@ -50,92 +50,138 @@ class ErrorHandlingTest {
         client =
             MpesaflowOkHttpClient.builder()
                 .baseUrl(wmRuntimeInfo.getHttpBaseUrl())
-                .bearerToken("My Bearer Token")
+                .appApiKey("My App API Key")
+                .rootApiKey("My Root API Key")
                 .build()
     }
 
     @Test
-    fun appsCreate200() {
-        val params = AppCreateParams.builder().description("description").name("name").build()
+    fun transactionsCreate200() {
+        val params =
+            TransactionCreateParams.builder()
+                .accountReference("accountReference")
+                .amount(42.23)
+                .mpesaRequestId("mpesaRequestId")
+                .phoneNumber("phoneNumber")
+                .transactionDesc("transactionDesc")
+                .build()
 
         val expected =
-            AppCreateResponse.builder().applicationId("applicationId").message("message").build()
+            TransactionCreateResponse.builder()
+                .message("message")
+                .transactionId("transactionId")
+                .build()
 
         stubFor(post(anyUrl()).willReturn(ok().withBody(toJson(expected))))
 
-        assertThat(client.apps().create(params)).isEqualTo(expected)
+        assertThat(client.transactions().create(params)).isEqualTo(expected)
     }
 
     @Test
-    fun appsCreate400() {
-        val params = AppCreateParams.builder().description("description").name("name").build()
+    fun transactionsCreate400() {
+        val params =
+            TransactionCreateParams.builder()
+                .accountReference("accountReference")
+                .amount(42.23)
+                .mpesaRequestId("mpesaRequestId")
+                .phoneNumber("phoneNumber")
+                .transactionDesc("transactionDesc")
+                .build()
 
         stubFor(
             post(anyUrl())
                 .willReturn(status(400).withHeader("Foo", "Bar").withBody(toJson(MPESAFLOW_ERROR)))
         )
 
-        assertThatThrownBy({ client.apps().create(params) })
+        assertThatThrownBy({ client.transactions().create(params) })
             .satisfies({ e ->
                 assertBadRequest(e, ImmutableListMultimap.of("Foo", "Bar"), MPESAFLOW_ERROR)
             })
     }
 
     @Test
-    fun appsCreate401() {
-        val params = AppCreateParams.builder().description("description").name("name").build()
+    fun transactionsCreate401() {
+        val params =
+            TransactionCreateParams.builder()
+                .accountReference("accountReference")
+                .amount(42.23)
+                .mpesaRequestId("mpesaRequestId")
+                .phoneNumber("phoneNumber")
+                .transactionDesc("transactionDesc")
+                .build()
 
         stubFor(
             post(anyUrl())
                 .willReturn(status(401).withHeader("Foo", "Bar").withBody(toJson(MPESAFLOW_ERROR)))
         )
 
-        assertThatThrownBy({ client.apps().create(params) })
+        assertThatThrownBy({ client.transactions().create(params) })
             .satisfies({ e ->
                 assertUnauthorized(e, ImmutableListMultimap.of("Foo", "Bar"), MPESAFLOW_ERROR)
             })
     }
 
     @Test
-    fun appsCreate403() {
-        val params = AppCreateParams.builder().description("description").name("name").build()
+    fun transactionsCreate403() {
+        val params =
+            TransactionCreateParams.builder()
+                .accountReference("accountReference")
+                .amount(42.23)
+                .mpesaRequestId("mpesaRequestId")
+                .phoneNumber("phoneNumber")
+                .transactionDesc("transactionDesc")
+                .build()
 
         stubFor(
             post(anyUrl())
                 .willReturn(status(403).withHeader("Foo", "Bar").withBody(toJson(MPESAFLOW_ERROR)))
         )
 
-        assertThatThrownBy({ client.apps().create(params) })
+        assertThatThrownBy({ client.transactions().create(params) })
             .satisfies({ e ->
                 assertPermissionDenied(e, ImmutableListMultimap.of("Foo", "Bar"), MPESAFLOW_ERROR)
             })
     }
 
     @Test
-    fun appsCreate404() {
-        val params = AppCreateParams.builder().description("description").name("name").build()
+    fun transactionsCreate404() {
+        val params =
+            TransactionCreateParams.builder()
+                .accountReference("accountReference")
+                .amount(42.23)
+                .mpesaRequestId("mpesaRequestId")
+                .phoneNumber("phoneNumber")
+                .transactionDesc("transactionDesc")
+                .build()
 
         stubFor(
             post(anyUrl())
                 .willReturn(status(404).withHeader("Foo", "Bar").withBody(toJson(MPESAFLOW_ERROR)))
         )
 
-        assertThatThrownBy({ client.apps().create(params) })
+        assertThatThrownBy({ client.transactions().create(params) })
             .satisfies({ e ->
                 assertNotFound(e, ImmutableListMultimap.of("Foo", "Bar"), MPESAFLOW_ERROR)
             })
     }
 
     @Test
-    fun appsCreate422() {
-        val params = AppCreateParams.builder().description("description").name("name").build()
+    fun transactionsCreate422() {
+        val params =
+            TransactionCreateParams.builder()
+                .accountReference("accountReference")
+                .amount(42.23)
+                .mpesaRequestId("mpesaRequestId")
+                .phoneNumber("phoneNumber")
+                .transactionDesc("transactionDesc")
+                .build()
 
         stubFor(
             post(anyUrl())
                 .willReturn(status(422).withHeader("Foo", "Bar").withBody(toJson(MPESAFLOW_ERROR)))
         )
 
-        assertThatThrownBy({ client.apps().create(params) })
+        assertThatThrownBy({ client.transactions().create(params) })
             .satisfies({ e ->
                 assertUnprocessableEntity(
                     e,
@@ -146,30 +192,44 @@ class ErrorHandlingTest {
     }
 
     @Test
-    fun appsCreate429() {
-        val params = AppCreateParams.builder().description("description").name("name").build()
+    fun transactionsCreate429() {
+        val params =
+            TransactionCreateParams.builder()
+                .accountReference("accountReference")
+                .amount(42.23)
+                .mpesaRequestId("mpesaRequestId")
+                .phoneNumber("phoneNumber")
+                .transactionDesc("transactionDesc")
+                .build()
 
         stubFor(
             post(anyUrl())
                 .willReturn(status(429).withHeader("Foo", "Bar").withBody(toJson(MPESAFLOW_ERROR)))
         )
 
-        assertThatThrownBy({ client.apps().create(params) })
+        assertThatThrownBy({ client.transactions().create(params) })
             .satisfies({ e ->
                 assertRateLimit(e, ImmutableListMultimap.of("Foo", "Bar"), MPESAFLOW_ERROR)
             })
     }
 
     @Test
-    fun appsCreate500() {
-        val params = AppCreateParams.builder().description("description").name("name").build()
+    fun transactionsCreate500() {
+        val params =
+            TransactionCreateParams.builder()
+                .accountReference("accountReference")
+                .amount(42.23)
+                .mpesaRequestId("mpesaRequestId")
+                .phoneNumber("phoneNumber")
+                .transactionDesc("transactionDesc")
+                .build()
 
         stubFor(
             post(anyUrl())
                 .willReturn(status(500).withHeader("Foo", "Bar").withBody(toJson(MPESAFLOW_ERROR)))
         )
 
-        assertThatThrownBy({ client.apps().create(params) })
+        assertThatThrownBy({ client.transactions().create(params) })
             .satisfies({ e ->
                 assertInternalServer(e, ImmutableListMultimap.of("Foo", "Bar"), MPESAFLOW_ERROR)
             })
@@ -177,14 +237,21 @@ class ErrorHandlingTest {
 
     @Test
     fun unexpectedStatusCode() {
-        val params = AppCreateParams.builder().description("description").name("name").build()
+        val params =
+            TransactionCreateParams.builder()
+                .accountReference("accountReference")
+                .amount(42.23)
+                .mpesaRequestId("mpesaRequestId")
+                .phoneNumber("phoneNumber")
+                .transactionDesc("transactionDesc")
+                .build()
 
         stubFor(
             post(anyUrl())
                 .willReturn(status(999).withHeader("Foo", "Bar").withBody(toJson(MPESAFLOW_ERROR)))
         )
 
-        assertThatThrownBy({ client.apps().create(params) })
+        assertThatThrownBy({ client.transactions().create(params) })
             .satisfies({ e ->
                 assertUnexpectedStatusCodeException(
                     e,
@@ -197,11 +264,18 @@ class ErrorHandlingTest {
 
     @Test
     fun invalidBody() {
-        val params = AppCreateParams.builder().description("description").name("name").build()
+        val params =
+            TransactionCreateParams.builder()
+                .accountReference("accountReference")
+                .amount(42.23)
+                .mpesaRequestId("mpesaRequestId")
+                .phoneNumber("phoneNumber")
+                .transactionDesc("transactionDesc")
+                .build()
 
         stubFor(post(anyUrl()).willReturn(status(200).withBody("Not JSON")))
 
-        assertThatThrownBy({ client.apps().create(params) })
+        assertThatThrownBy({ client.transactions().create(params) })
             .satisfies({ e ->
                 assertThat(e)
                     .isInstanceOf(MpesaflowException::class.java)
@@ -211,11 +285,18 @@ class ErrorHandlingTest {
 
     @Test
     fun invalidErrorBody() {
-        val params = AppCreateParams.builder().description("description").name("name").build()
+        val params =
+            TransactionCreateParams.builder()
+                .accountReference("accountReference")
+                .amount(42.23)
+                .mpesaRequestId("mpesaRequestId")
+                .phoneNumber("phoneNumber")
+                .transactionDesc("transactionDesc")
+                .build()
 
         stubFor(post(anyUrl()).willReturn(status(400).withBody("Not JSON")))
 
-        assertThatThrownBy({ client.apps().create(params) })
+        assertThatThrownBy({ client.transactions().create(params) })
             .satisfies({ e ->
                 assertBadRequest(e, ImmutableListMultimap.of(), MpesaflowError.builder().build())
             })
