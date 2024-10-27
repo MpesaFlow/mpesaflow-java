@@ -12,6 +12,4 @@ interface MpesaflowClient {
     fun apps(): AppService
 
     fun transactions(): TransactionService
-
-    fun health(): HealthService
 }

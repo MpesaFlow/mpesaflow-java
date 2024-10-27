@@ -29,13 +29,9 @@ constructor(
         TransactionServiceImpl(clientOptionsWithUserAgent)
     }
 
-    private val health: HealthService by lazy { HealthServiceImpl(clientOptionsWithUserAgent) }
-
     override fun async(): MpesaflowClientAsync = async
 
     override fun apps(): AppService = apps
 
     override fun transactions(): TransactionService = transactions
-
-    override fun health(): HealthService = health
 }
