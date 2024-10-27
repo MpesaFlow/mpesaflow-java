@@ -41,7 +41,7 @@ configure<MavenPublishBaseExtension> {
         developers {
             developer {
                 name.set("Mpesaflow")
-                email.set("support@mpesaflow.com")
+                email.set("evansso@mpesaflow.com")
             }
         }
 
