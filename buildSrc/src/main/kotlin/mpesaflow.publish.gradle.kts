@@ -30,7 +30,7 @@ configure<MavenPublishBaseExtension> {
     pom {
         name.set("MpesaFlow API")
         description.set("API for managing MpesaFlow transactions, applications, and API keys")
-        url.set("https://docs.mpesaflow.com")
+        url.set("https://docs.mpesaflow.com/")
 
         licenses {
             license {
@@ -41,7 +41,7 @@ configure<MavenPublishBaseExtension> {
         developers {
             developer {
                 name.set("Mpesaflow")
-                email.set("evansso@mpesaflow.com")
+                email.set("support@mpesaflow.com")
             }
         }
 

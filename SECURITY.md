@@ -20,7 +20,7 @@ or products provided by Mpesaflow please follow the respective company's securit
 
 ### Mpesaflow Terms and Policies
 
-Please contact evansso@mpesaflow.com for any questions or concerns regarding security of our services.
+Please contact support@mpesaflow.com for any questions or concerns regarding security of our services.
 
 ---
 
