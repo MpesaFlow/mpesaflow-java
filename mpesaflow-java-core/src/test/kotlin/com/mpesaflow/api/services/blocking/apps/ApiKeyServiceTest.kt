@@ -16,7 +16,7 @@ class ApiKeyServiceTest {
         val client =
             MpesaflowOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
-                .bearerToken("My Bearer Token")
+                .appApiKey("My App API Key")
                 .build()
         val apiKeyService = client.apps().apiKeys()
         val appApiKeyCreateResponse =
@@ -32,7 +32,7 @@ class ApiKeyServiceTest {
         val client =
             MpesaflowOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
-                .bearerToken("My Bearer Token")
+                .appApiKey("My App API Key")
                 .build()
         val apiKeyService = client.apps().apiKeys()
         val appApiKeyListResponse =
@@ -53,7 +53,7 @@ class ApiKeyServiceTest {
         val client =
             MpesaflowOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
-                .bearerToken("My Bearer Token")
+                .appApiKey("My App API Key")
                 .build()
         val apiKeyService = client.apps().apiKeys()
         val appApiKeyDeleteResponse =

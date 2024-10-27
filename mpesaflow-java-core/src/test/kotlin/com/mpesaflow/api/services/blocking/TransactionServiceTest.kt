@@ -16,7 +16,7 @@ class TransactionServiceTest {
         val client =
             MpesaflowOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
-                .bearerToken("My Bearer Token")
+                .appApiKey("My App API Key")
                 .build()
         val transactionService = client.transactions()
         val transactionCreateResponse =
@@ -38,7 +38,7 @@ class TransactionServiceTest {
         val client =
             MpesaflowOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
-                .bearerToken("My Bearer Token")
+                .appApiKey("My App API Key")
                 .build()
         val transactionService = client.transactions()
         val transaction =
@@ -54,7 +54,7 @@ class TransactionServiceTest {
         val client =
             MpesaflowOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
-                .bearerToken("My Bearer Token")
+                .appApiKey("My App API Key")
                 .build()
         val transactionService = client.transactions()
         val transactionListResponse =
